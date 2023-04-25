@@ -1,0 +1,29 @@
+
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="{% static 'css/delete.css' %}">
+</head>
+<body>
+<!--          <form action="" method="post">{% csrf_token %}-->
+<!--                <h4>Are you sure you want to delete?</h4>-->
+<!--                <input type="submit" class="btn btn-danger btn-md" value="Confirm delete"/>-->
+<!--              <a href="/student" ><div class = "btn btn-primary">Cancel</div></a>-->
+<!--        </form-->
+        <form action="" method="post"   class="modal-content" action="/action_page.php">
+            {% csrf_token %}
+            <div class="container">
+              <h1>Delete Student</h1>
+              <p>Are you sure you want to delete your student?</p>
+
+              <div class="clearfix">
+                  <button type="submit" class="tn btn-danger btn-md">Delete</button>
+                <a href="/student"  class = "btn btn-primary    mb-3">Cancel</a>
+              </div>
+            </div>
+          </form>
+
+</html>

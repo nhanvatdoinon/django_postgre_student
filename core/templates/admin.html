@@ -1,0 +1,107 @@
+{% extends 'baseadmin.html' %}
+
+{% block title %}
+Trang chủ
+{% endblock title %}
+
+{% block main_content %}
+{% load static %}
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
+<script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
+<section class="container" xmlns="http://www.w3.org/1999/html">
+    <div class="logout" style="float:right">
+            <p class="text-center"><a style="color:white;background-color:blue;padding:8px;text-decoration:none;border-radius:10px;" href="{% url 'logout' %}"> Đăng xuất.</a></p>
+    </div>
+    <div class="row justify-content-around text-center text-white mt-5">
+        <div class="col-sm-8 ">
+            <h3>Thêm sửa xóa sinh viên</h3>
+        </div>
+    </div>
+    <div class="row justify-content-around mt-3">
+        <div class="col-sm-8">
+             <a href="{% url 'add' %}" class='btn btn-primary float-end'>Add Student</a>
+        </div>
+    </div>
+     <div class="row justify-content-around mt-3">
+        <div class="col-sm-8">
+             <a href="{% url 'teacher' %}" class='btn btn-primary' style="background-color:red">Teacher</a>
+        </div>
+    </div>
+    <form style="width:1150px;" method ='GET' >
+        {% csrf_token %}
+        {{filters.form}}
+        <input style="float:right;" type = 'submit' value= 'Search',name="">
+<!--    <form action="{% url 'search' %}" method ='GET'>-->
+<!--        {% csrf_token %}-->
+<!--        <div class="input-group mb-3" style="width:680px;margin:auto">-->
+<!--            <input name="q" type="text" class="form-control input-sm" placeholder="Search Student" value="{{request.GET.q}}">-->
+<!--            {{filters.form}}-->
+<!--           <button class="btn btn-secondary" title="Search">-->
+<!--            <i class="fa fa-search"></i>-->
+<!--            </button>-->
+<!--&lt;!&ndash;            <a href="{% url 'student' %}" class="btn btn-dark" style="margin-left:1px;" title="Refresh">&ndash;&gt;-->
+<!--&lt;!&ndash;                <i class="fa fa-sync-alt"&ndash;&gt;-->
+<!--&lt;!&ndash;            </a>&ndash;&gt;-->
+<!--        </div>-->
+<!--    </form>-->
+
+
+    <div class="row justify-content-around text-center text-white mt-1">
+        <div class="col-sm-8 ">
+            <table class="table table-dark table-hover">
+                <thead>
+                    <tr>
+                      <th scope="col">STT</th>
+                      <th scope="col">Name</th>
+                      <th scope="col">Phone</th>
+                      <th scope="col">Address</th>
+                      <th scope="col">Age</th>
+                      <th scope="col">Gender</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for i in page.object_list %}
+                    <tr>
+                      <th scope="row">{{forloop.counter}}</th>
+                      <td>{{i.name}}</td>
+                      <td>{{i.phone}}</td>
+                      <td>{{i.address}}</td>
+                      <td>{{i.age}}</td>
+                       <td>{{i.gender}}</td>
+                      <td>
+                          <a style="width:70px;height:30px" href="{% url 'delete' i.id %}"   class="btn btn-danger" btn-sm data-toggle="modal"  >Delete </a>
+
+<!--                          <form action="{%url 'delete' i.id %}" method="POST">-->
+<!--                              {% csrf_token %}-->
+<!--                              <input type="hidden" name="id" value={{i.id}}>-->
+<!--                              <input type="submit"value="Delete"class="btn btn-danger btn-sm">-->
+<!--                          </form>-->
+                      </td>
+                         <td class="aline-inline">
+                          <table>
+                              <tr>
+                                  <td>
+                                      <a  style="width:70px"href="{% url 'edit' i.id %}"class="btn btn-info btn-sm">Edit</a>
+                                  </td>
+                              </tr>
+                          </table>
+                      </td>
+                    </tr>
+                {% endfor %}
+                <h2 style="width:center;color:Black">Page Number: {{page.number}}</h2>
+                <div class="page_link">
+                    {% if page.has_previous %}
+                      <a class="prev btn btn-info" href="{% url 'student' %}?page={{ page.previous_page_number }}">Previous Page</a>
+                    {% endif %}
+                    {% if page.has_next %}
+                      <a class="next btn btn-info" href="{% url 'student' %}?page={{ page.next_page_number }}">Next Page</a>
+                    {% endif %}
+                </div>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    </form>
+</section>
+{% endblock main_content %}
